@@ -1,0 +1,12 @@
+.main_wrapper {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-grow: 1;
+  margin: 10px 10px 10px 0;
+  padding: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: #f3f3f3;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

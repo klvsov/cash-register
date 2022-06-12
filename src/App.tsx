@@ -1,26 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, lazy, Suspense } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
+import { routes } from './utils/routes';
+import Loader from './components/Loader';
+import MainContent from './layouts/MainContent';
+import Sidebar from './layouts/Sidebar';
+
+import styles from './App.module.scss';
+
+const AddNew = lazy(() => import('./components/AddNew'));
+const Home = lazy(() => import('./components/Home'));
+const ManageCategories = lazy(() => import('./components/ManageCategories'));
+const Buy = lazy(() => import('./components/Buy'));
+
+const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.main_wrapper}>
+      <Sidebar />
+      <MainContent>
+        <Routes>
+          <Route
+            path={routes.home}
+            element={
+              <Suspense fallback={<Loader />}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path={routes.manageCategories}
+            element={
+              <Suspense fallback={<Loader />}>
+                <ManageCategories />
+              </Suspense>
+            }
+          />
+          <Route
+            path={routes.addNew}
+            element={
+              <Suspense fallback={<Loader />}>
+                <AddNew />
+              </Suspense>
+            }
+          />
+          <Route
+            path={routes.buy}
+            element={
+              <Suspense fallback={<Loader />}>
+                <Buy />
+              </Suspense>
+            }
+          />
+        </Routes>
+      </MainContent>
     </div>
   );
-}
+};
 
 export default App;

@@ -1,0 +1,185 @@
+$primary: #11998e;
+$secondary: #38ef7d;
+$white: #fff;
+$gray: #9b9b9b;
+
+.main_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #11998e;
+}
+
+.toggler_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle_left_label {
+  margin-right: 10px;
+}
+
+.toggle_right_label {
+  margin-left: 10px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 350px;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid darkcyan;
+}
+
+.form_group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+.form_field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid $gray;
+  outline: 0;
+  font-size: 1.3rem;
+  color: $primary;
+  padding: 7px 0 7px 5px;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form_label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 25px;
+    left: 5px;
+  }
+}
+
+.form_label {
+  position: absolute;
+  top: -5px;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: $gray;
+}
+
+.form_field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: $primary;
+    font-weight: 700;
+  }
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 1px;
+  border-image: linear-gradient(to right, $primary, $secondary);
+  border-image-slice: 1;
+}
+.form_field {
+  &:required,
+  &:invalid {
+    box-shadow: none;
+  }
+}
+
+.btn {
+  color: #fff;
+  background-color: $primary;
+  outline: none;
+  border: 0;
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+
+  &:active {
+    background-color: darkcyan;
+  }
+}
+
+.product_code {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 1.3rem;
+  color: $primary;
+}
+
+.scanner_wrapper {
+  margin-bottom: 20px;
+  position: relative;
+  height: 80px;
+  video {
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid red;
+    overflow: hidden;
+  }
+}
+
+.laser {
+  width: 100%;
+  background-color: red;
+  height: 2px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 0 4px red;
+  animation: scanning 2s infinite;
+}
+
+.diode {
+  animation: beam 0.01s infinite;
+}
+
+.errorState {
+  border: 1px solid crimson;
+}
+
+.error {
+  position: absolute;
+  bottom: -15px;
+  left: 0px;
+  font-size: 10px;
+  color: crimson;
+}
+
+@keyframes beam {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes scanning {
+  50% {
+    transform: translateY(80px);
+  }
+}

@@ -1,0 +1,121 @@
+.main_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #11998e;
+}
+
+.categories_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  height: fit-content;
+  margin-top: 15px;
+}
+
+.category_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 50px;
+  margin: 5px 20px 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    & > div {
+      display: flex;
+    }
+  }
+}
+
+.edit_wrapper {
+  display: flex;
+  position: relative;
+  & input {
+    flex-basis: 85%;
+    width: 85%;
+    padding: 5px;
+    border-radius: 2px;
+    outline: none;
+    box-sizing: border-box;
+    height: 25px;
+    margin-right: 5px;
+  }
+
+  & button {
+    color: #fff;
+    background-color: #11998e;
+    outline: none;
+    border: 0;
+    color: #fff;
+    padding: 5px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    position: relative;
+    height: 25px;
+
+    &:active {
+      background-color: darkcyan;
+    }
+    & img {
+      width: 15px;
+      height: 15px;
+    }
+  }
+}
+
+.errorState {
+  border: 1px solid crimson;
+}
+
+.error {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  font-size: 10px;
+  color: crimson;
+}
+
+.cashOverlay {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #008b8b;
+}
+
+.icon_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2px;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid darkblue;
+
+  &:active {
+    border: 1px solid darkcyan;
+  }
+}
+
+.icon {
+  max-width: 100%;
+}

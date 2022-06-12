@@ -1,0 +1,69 @@
+.buy_wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.scanner_box {
+  flex-grow: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanner_wrapper {
+  width: 200px;
+  margin-bottom: 20px;
+  position: relative;
+  height: 80px;
+  video {
+    height: 80px;
+    object-fit: cover;
+    border: 2px solid red;
+    overflow: hidden;
+  }
+}
+
+.laser {
+  width: 100%;
+  background-color: red;
+  height: 2px;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  box-shadow: 0 0 4px red;
+  animation: scanning 2s infinite;
+}
+
+.diode {
+  animation: beam 0.01s infinite;
+}
+
+.product_list {
+  flex-grow: 1;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  padding: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: white;
+}
+
+.no_product {
+  text-align: center;
+}
+
+@keyframes beam {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes scanning {
+  50% {
+    transform: translateY(80px);
+  }
+}
