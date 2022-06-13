@@ -62,7 +62,7 @@ const Scanner = (props) => {
     });
 
     Quagga.onDetected(detected);
-  }, []);
+  }, [detected]);
 
   const detected = (result) => {
     onDetected(result.codeResult.code);
