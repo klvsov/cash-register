@@ -13,7 +13,7 @@ const Buy: FC = () => {
 
   const [productList, setProductList] = useState<IProduct[]>([]);
   const [scan, setScan] = useState(true);
-  const [code, setCode] = useState('');
+  // const [code, setCode] = useState('');
   const [sum, setSum] = useState(0);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Buy: FC = () => {
       setProductList([...productList, { ...product, count: 1 }]);
     }
     dispatch(clearProduct());
-  }, [product, dispatch]);
+  }, [product, dispatch, productList]);
 
   // useEffect(() => {
   //   if (code) {
