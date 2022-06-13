@@ -9,6 +9,7 @@ export interface IProduct {
   code: string;
   price: number;
   category: string;
+  count?: number;
 }
 
 export interface INewObject {

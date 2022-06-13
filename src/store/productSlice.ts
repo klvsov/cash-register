@@ -37,7 +37,7 @@ export const fetchProductByCode = createAsyncThunk<
   string,
   { rejectValue: { message: string } }
 >('products/fetchProductByCode', async (code) => {
-  const response = await fetch(`${BASE_URL}/products/code/${code}`);
+  const response = await fetch(`${BASE_URL}/products/codes/${code}`);
   if (!response.ok) throw new Error('Server error!');
   const data = await response.json();
   return data;

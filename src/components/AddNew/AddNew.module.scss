@@ -137,8 +137,10 @@ $gray: #9b9b9b;
   margin-bottom: 20px;
   position: relative;
   height: 80px;
+  width: 200px;
   video {
     height: 80px;
+    width: 100%;
     object-fit: cover;
     border: 2px solid red;
     overflow: hidden;

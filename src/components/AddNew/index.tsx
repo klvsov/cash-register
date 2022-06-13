@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import BarcodeScannerComponent from 'react-qr-barcode-scanner';
 import cls from 'classnames';
 import { useLocation } from 'react-router-dom';
-
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ICategory, IProduct } from '../../types';
 import styles from './AddNew.module.scss';
@@ -10,6 +8,7 @@ import { addProduct, editProduct } from '../../store/productSlice';
 import { addCategory, fetchCategories } from '../../store/categoriesSlice';
 import Loader from '../Loader';
 import Toggler from '../Toggler';
+import Scanner from '../Scanner';
 
 const initialState = {
   code: '',
@@ -72,13 +71,6 @@ const AddNew: React.FC = () => {
     if (!categoryList?.length) dispatch(fetchCategories());
   }, [categoryList, dispatch]);
 
-  const barcodeScannerComponentHandleUpdate = (error: any, result: any) => {
-    if (result) {
-      setFields({ ...fields, code: result.text });
-      setScan(false);
-    }
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.target;
     const errorList = { ...errors };
@@ -134,6 +126,12 @@ const AddNew: React.FC = () => {
     setFields(initialState);
   };
 
+  const onDetected = (result: string) => {
+    if (result) {
+      setFields({ ...fields, code: result });
+      setScan(false);
+    }
+  };
   return (
     <div className={styles.main_wrapper}>
       {productLoading ? (
@@ -161,11 +159,7 @@ const AddNew: React.FC = () => {
                     <div className={styles.diode}>
                       <div className={styles.laser} />
                     </div>
-                    <BarcodeScannerComponent
-                      width={200}
-                      height={75}
-                      onUpdate={barcodeScannerComponentHandleUpdate}
-                    />
+                    <Scanner onDetected={onDetected} />
                     <span className={styles.error}>{errors?.code}</span>
                   </div>
                 ) : (

@@ -7,7 +7,7 @@
 }
 
 .scanner_box {
-  flex-grow: 0.8;
+  flex-basis: 45%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,8 +18,10 @@
   margin-bottom: 20px;
   position: relative;
   height: 80px;
+  width: 200px;
   video {
     height: 80px;
+    width: 100%;
     object-fit: cover;
     border: 2px solid red;
     overflow: hidden;
@@ -42,7 +44,7 @@
 }
 
 .product_list {
-  flex-grow: 1;
+  flex-basis: 55%;
   height: 100%;
   flex-direction: column;
   display: flex;
@@ -52,8 +54,31 @@
   background: white;
 }
 
+.product_item_wrapper {
+  display: flex;
+}
+
+.product_name {
+  margin-right: 5px;
+}
+
+.product_price {
+  margin-right: 10px;
+  &:before {
+    content: '\20B4';
+    margin-left: 5px;
+  }
+}
+
 .no_product {
   text-align: center;
+}
+
+.summary {
+  margin-top: auto;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  text-align: right;
 }
 
 @keyframes beam {
