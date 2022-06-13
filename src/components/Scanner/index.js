@@ -7,10 +7,6 @@ import styles from './Scanner.module.scss';
 const Scanner = (props) => {
   const { onDetected } = props;
 
-  const detected = (result) => {
-    onDetected(result.codeResult.code);
-  };
-
   useEffect(() => {
     Quagga.init(config, (err) => {
       if (err) {
@@ -66,7 +62,12 @@ const Scanner = (props) => {
     });
 
     Quagga.onDetected(detected);
-  }, [detected]);
+    // eslint-disable-next-line
+  }, []);
+
+  const detected = (result) => {
+    onDetected(result.codeResult.code);
+  };
 
   return <div id="interactive" className={cls(styles.viewport, 'viewport')} />;
 };
