@@ -1,6 +1,9 @@
 export interface ICategory {
   name: string;
   _id?: string;
+  data?: {
+    _id?: string;
+  };
 }
 
 export interface IProduct {
@@ -10,12 +13,7 @@ export interface IProduct {
   price: number;
   category: string;
   count?: number;
-}
-
-export interface INewObject {
-  name: string;
-  _id?: string;
-  code?: string;
-  price?: number;
-  category?: string;
+  data?: {
+    _id?: string;
+  };
 }

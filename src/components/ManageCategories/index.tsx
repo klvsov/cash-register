@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchCategories,
   editCategory,
-  clearChangeCategory,
   deleteCategory,
+  clearCategoryMessage,
 } from '../../store/categoriesSlice';
 import Loader from '../Loader';
 
@@ -22,22 +22,22 @@ const initialErrorState = {
 };
 
 const ManageCategories: FC = () => {
-  const { categoryList, loading, changeCategory } = useAppSelector(
+  const { categoryList, loading, message } = useAppSelector(
     (state) => state.category
   );
+
   const [editCategoryId, setEditCategoryId] = useState('');
   const [editCategoryName, setEditCategoryName] = useState('');
   const [errors, setErrors] = useState<IError>(initialErrorState);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!categoryList?.length) dispatch(fetchCategories());
-    dispatch(clearChangeCategory());
-  }, [categoryList, dispatch]);
+  // useEffect(() => {
+  //   if (message && !show) dispatch(showSnackbar());
+  // }, [dispatch, message, show]);
 
   useEffect(() => {
-    if (changeCategory) dispatch(fetchCategories());
-  }, [dispatch, changeCategory]);
+    if (!categoryList?.length) dispatch(fetchCategories());
+  }, [categoryList, dispatch]);
 
   const handleEditCategory = (id: string): void => {
     setEditCategoryId(id);

@@ -7,7 +7,6 @@ import styles from './Sidebar.module.scss';
 import { ReactComponent as HomeIcon } from '../../assets/icons/home-svgrepo-com.svg';
 import { ReactComponent as CategoriesIcon } from '../../assets/icons/collapse-categories-svgrepo-com.svg';
 import { ReactComponent as AddIcon } from '../../assets/icons/task-list-add-svgrepo-com.svg';
-import { ReactComponent as LogoIcon } from '../../assets/icons/cash-svgrepo-com.svg';
 import { ReactComponent as BuyIcon } from '../../assets/icons/buy-svgrepo-com.svg';
 
 const Sidebar: React.FC = () => {
@@ -21,9 +20,6 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className={styles.sidebar_wrapper}>
-      <div className={styles.logo_wrapper}>
-        <LogoIcon onClick={() => navigate(routes.home)} />
-      </div>
       <div className={styles.middle_section}>
         <span
           className={cls({

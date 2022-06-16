@@ -1,4 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
+import { PDFExport } from '@progress/kendo-react-pdf';
 
 import Scanner from '../Scanner';
 import { fetchProductByCode, clearProduct } from '../../store/productSlice';
@@ -7,13 +8,19 @@ import styles from './Buy.module.scss';
 import { IProduct } from '../../types';
 import Loader from '../Loader';
 
+const sound = require('../../assets/Barcode-scanner-beep-sound.mp3');
+
 const Buy: FC = () => {
+  const pdfExportComponent = useRef<PDFExport>(null);
+
+  const audio = new Audio(sound);
+
   const dispatch = useAppDispatch();
   const { product } = useAppSelector((state) => state.product);
 
   const [productList, setProductList] = useState<IProduct[]>([]);
   const [scan, setScan] = useState(true);
-  // const [code, setCode] = useState('');
+  const [code, setCode] = useState('');
   const [sum, setSum] = useState(0);
 
   useEffect(() => {
@@ -23,12 +30,9 @@ const Buy: FC = () => {
     dispatch(clearProduct());
   }, [product, dispatch, productList]);
 
-  // useEffect(() => {
-  //   if (code) {
-  //     dispatch(fetchProductByCode(code));
-  //   }
-  //   setCode('');
-  // }, [code, dispatch]);
+  useEffect(() => {
+    code && dispatch(fetchProductByCode(code));
+  }, [code, dispatch]);
 
   useEffect(() => {
     let sum = 0;
@@ -39,13 +43,15 @@ const Buy: FC = () => {
   }, [productList]);
 
   useEffect(() => {
-    if (!scan) setTimeout(() => setScan(true), 5000);
+    if (!scan) setTimeout(() => setScan(true), 3000);
   }, [scan]);
 
   const onDetected = (result: string) => {
-    // setCode(result);
-    setScan(false);
-    dispatch(fetchProductByCode(result));
+    if (result) {
+      setCode(result);
+      setScan(false);
+      audio.play();
+    }
   };
 
   const handleChangeCount = (
@@ -56,6 +62,10 @@ const Buy: FC = () => {
     const products = [...productList];
     products[i].count = Number(value);
     setProductList(products);
+  };
+
+  const handlePrint = (): void => {
+    pdfExportComponent.current && pdfExportComponent.current.save();
   };
 
   return (
@@ -73,23 +83,38 @@ const Buy: FC = () => {
         )}
       </div>
       <div className={styles.product_list}>
-        {!!productList?.length ? (
-          productList.map((product, i) => (
-            <div className={styles.product_item_wrapper} key={product._id}>
-              <div className={styles.product_name}>{product.name}</div>
-              <div className={styles.product_price}>{product.price}</div>
-              <input
-                type="number"
-                min={1}
-                value={product.count}
-                onChange={(e) => handleChangeCount(e, i)}
-              />
-            </div>
-          ))
-        ) : (
-          <p className={styles.no_product}>Please scan the barcode</p>
-        )}
-        <p className={styles.summary}>Summary: {sum} UAH</p>
+        <PDFExport ref={pdfExportComponent} paperSize="A5" margin={25}>
+          <div className={styles.products}>
+            {!!productList?.length ? (
+              productList.map((product, i) => (
+                <div
+                  className={styles.product_item_wrapper}
+                  key={product._id ? product._id + Date.now() : Date.now()}
+                >
+                  <div className={styles.product_name}>{product.name}</div>
+                  <div className={styles.product_price}>
+                    {product.price} UAH
+                  </div>
+                  <input
+                    className={styles.product_count}
+                    type="number"
+                    min={1}
+                    value={product.count}
+                    onChange={(e) => handleChangeCount(e, i)}
+                  />
+                </div>
+              ))
+            ) : (
+              <p className={styles.no_product}>Please scan the barcode</p>
+            )}
+          </div>
+          <p className={styles.summary}>Total: {sum} UAH</p>
+        </PDFExport>
+        <div className={styles.btn_wrapper}>
+          <button className={styles.btn_print} onClick={handlePrint}>
+            Print
+          </button>
+        </div>
       </div>
     </div>
   );

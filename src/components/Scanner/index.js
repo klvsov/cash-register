@@ -4,9 +4,7 @@ import Quagga from 'quagga';
 import cls from 'classnames';
 import styles from './Scanner.module.scss';
 
-const Scanner = (props) => {
-  const { onDetected } = props;
-
+const Scanner = ({ onDetected }) => {
   useEffect(() => {
     Quagga.init(config, (err) => {
       if (err) {

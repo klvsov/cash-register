@@ -4,8 +4,16 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ICategory, IProduct } from '../../types';
 import styles from './AddNew.module.scss';
-import { addProduct, editProduct } from '../../store/productSlice';
-import { addCategory, fetchCategories } from '../../store/categoriesSlice';
+import {
+  addProduct,
+  clearProductMessage,
+  editProduct,
+} from '../../store/productSlice';
+import {
+  addCategory,
+  fetchCategories,
+  clearCategoryMessage,
+} from '../../store/categoriesSlice';
 import Loader from '../Loader';
 import Toggler from '../Toggler';
 import Scanner from '../Scanner';
@@ -40,9 +48,13 @@ const AddNew: React.FC = () => {
   const state = location?.state as IState;
   const editingProduct = state?.editingProduct;
 
-  const { loading: productLoading } = useAppSelector((state) => state.product);
+  const { loading: productLoading, message: productMessage } = useAppSelector(
+    (state) => state.product
+  );
 
-  const { categoryList } = useAppSelector((state) => state.category);
+  const { categoryList, message: categoryMessage } = useAppSelector(
+    (state) => state.category
+  );
 
   const dispatch = useAppDispatch();
 

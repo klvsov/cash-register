@@ -38,6 +38,12 @@
   }
 }
 
+@media (max-width: 430px) {
+  .category_wrapper {
+    width: calc(50% - 40px);
+  }
+}
+
 .edit_wrapper {
   display: flex;
   position: relative;

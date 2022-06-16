@@ -12,6 +12,20 @@
   box-shadow: rgba(0, 0, 0, 0.15) -1.95px 1.95px 2.6px;
 }
 
+@media (max-width: 430px) {
+  .sidebar_wrapper {
+    width: auto;
+    max-width: 100%;
+    flex-direction: row;
+    margin: 10px 5px 0 5px;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 20px;
+    box-shadow: none;
+    border: 1px solid darkcyan;
+    border-bottom: none;
+  }
+}
+
 .logo_wrapper {
   border-radius: 10px;
   display: flex;
@@ -56,6 +70,13 @@
     justify-content: center;
     padding: 10px;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 430px) {
+  .middle_section {
+    display: flex;
+    margin: 0 10px 0 aut0;
   }
 }
 

@@ -7,12 +7,10 @@ import { fetchCategories } from '../../store/categoriesSlice';
 import {
   deleteProduct,
   fetchProductByCategory,
-  clearChangeProduct,
 } from '../../store/productSlice';
 import Loader from '../Loader';
 import editIcon from '../../assets/icons/edit-svgrepo-com.svg';
 import trashIcon from '../../assets/icons/trash-svgrepo-com.svg';
-
 import styles from './Home.module.scss';
 import { routes } from '../../utils/routes';
 
@@ -24,11 +22,10 @@ const Home: FC = () => {
   const { categoryList, loading: categoryLoading } = useAppSelector(
     (state) => state.category
   );
-  const {
-    products,
-    loading: productLoading,
-    changeProduct,
-  } = useAppSelector((state) => state.product);
+
+  const { products, loading: productLoading } = useAppSelector(
+    (state) => state.product
+  );
 
   const dispatch = useAppDispatch();
 
@@ -37,9 +34,8 @@ const Home: FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (changeProduct && activeCategory)
-      dispatch(fetchProductByCategory(activeCategory));
-  }, [dispatch, changeProduct, activeCategory]);
+    if (activeCategory) dispatch(fetchProductByCategory(activeCategory));
+  }, [dispatch, activeCategory]);
 
   useEffect(() => {
     if (categoryList?.length && categoryList?.[0]._id)
@@ -48,7 +44,6 @@ const Home: FC = () => {
 
   useEffect(() => {
     if (activeCategory) dispatch(fetchProductByCategory(activeCategory));
-    dispatch(clearChangeProduct());
   }, [dispatch, activeCategory]);
 
   const handleClickCategory = (id: string): void => {

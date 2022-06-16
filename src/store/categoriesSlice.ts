@@ -7,14 +7,14 @@ type CategoriesState = {
   categoryList: ICategory[];
   loading: boolean;
   error: string | undefined | null;
-  changeCategory?: null | ICategory;
+  message: string | null;
 };
 
 const initialState: CategoriesState = {
   categoryList: [],
   loading: false,
   error: null,
-  changeCategory: null,
+  message: null,
 };
 
 export const fetchCategories = createAsyncThunk<
@@ -82,8 +82,8 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    clearChangeCategory: (state) => {
-      state.changeCategory = null;
+    clearCategoryMessage: (state) => {
+      state.message = null;
     },
   },
   extraReducers: (builder) => {
@@ -91,6 +91,7 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.message = null;
       })
       .addCase(fetchCategories.fulfilled, (state, action) => {
         state.loading = false;
@@ -104,11 +105,13 @@ const categoriesSlice = createSlice({
       .addCase(addCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.message = null;
       })
       .addCase(addCategory.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.categoryList.push(action.payload);
+        state.message = 'Successfully added category';
       })
       .addCase(addCategory.rejected, (state, { error }) => {
         state.loading = false;
@@ -117,11 +120,20 @@ const categoriesSlice = createSlice({
       .addCase(editCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.message = null;
       })
       .addCase(editCategory.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.changeCategory = action.payload;
+        state.categoryList = action.payload?.data?._id
+          ? [
+              ...state.categoryList.filter(
+                (category) => category._id !== action.payload?.data?._id
+              ),
+              action.payload,
+            ]
+          : state.categoryList;
+        state.message = 'Successfully edited category';
       })
       .addCase(editCategory.rejected, (state, { error }) => {
         state.loading = false;
@@ -130,11 +142,17 @@ const categoriesSlice = createSlice({
       .addCase(deleteCategory.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.message = null;
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.changeCategory = action.payload;
+        state.categoryList = action.payload.data?._id
+          ? state.categoryList.filter(
+              (category) => category._id !== action.payload.data?._id
+            )
+          : state.categoryList;
+        state.message = 'Successfully deleted category';
       })
       .addCase(deleteCategory.rejected, (state, { error }) => {
         state.loading = false;
@@ -143,6 +161,6 @@ const categoriesSlice = createSlice({
   },
 });
 
-export const { clearChangeCategory } = categoriesSlice.actions;
+export const { clearCategoryMessage } = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;
