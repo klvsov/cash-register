@@ -4,16 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ICategory, IProduct } from '../../types';
 import styles from './AddNew.module.scss';
-import {
-  addProduct,
-  clearProductMessage,
-  editProduct,
-} from '../../store/productSlice';
-import {
-  addCategory,
-  fetchCategories,
-  clearCategoryMessage,
-} from '../../store/categoriesSlice';
+import { addProduct, editProduct } from '../../store/productSlice';
+import { addCategory, fetchCategories } from '../../store/categoriesSlice';
 import Loader from '../Loader';
 import Toggler from '../Toggler';
 import Scanner from '../Scanner';
@@ -48,13 +40,9 @@ const AddNew: React.FC = () => {
   const state = location?.state as IState;
   const editingProduct = state?.editingProduct;
 
-  const { loading: productLoading, message: productMessage } = useAppSelector(
-    (state) => state.product
-  );
+  const { loading: productLoading } = useAppSelector((state) => state.product);
 
-  const { categoryList, message: categoryMessage } = useAppSelector(
-    (state) => state.category
-  );
+  const { categoryList } = useAppSelector((state) => state.category);
 
   const dispatch = useAppDispatch();
 
@@ -64,19 +52,18 @@ const AddNew: React.FC = () => {
   const [errors, setErrors] = useState<IError>(initialErrorState);
 
   useEffect(() => {
-    if (editingProduct) {
-      const editValue = {
-        code: editingProduct?.code,
-        name: editingProduct?.name,
-        price: editingProduct?.price,
-        category:
-          categoryList.find((item) => item._id === editingProduct.category)
-            ?.name || '',
-      };
-      setFields(editValue);
-      setIsAddProduct(true);
-      setScan(false);
-    }
+    if (!editingProduct) return;
+    const editValue = {
+      code: editingProduct?.code,
+      name: editingProduct?.name,
+      price: editingProduct?.price,
+      category:
+        categoryList.find((item) => item._id === editingProduct.category)
+          ?.name || '',
+    };
+    setFields(editValue);
+    setIsAddProduct(true);
+    setScan(false);
   }, [editingProduct, categoryList]);
 
   useEffect(() => {
@@ -139,11 +126,13 @@ const AddNew: React.FC = () => {
   };
 
   const onDetected = (result: string) => {
+    setScan(false);
     if (result) {
-      setFields({ ...fields, code: result });
-      setScan(false);
+      setFields((prev) => ({ ...prev, code: result }));
+      return;
     }
   };
+
   return (
     <div className={styles.main_wrapper}>
       {productLoading ? (

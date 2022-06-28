@@ -51,6 +51,7 @@ const Buy: FC = () => {
       setCode(result);
       setScan(false);
       audio.play();
+      return;
     }
   };
 

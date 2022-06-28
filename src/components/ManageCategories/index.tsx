@@ -22,22 +22,16 @@ const initialErrorState = {
 };
 
 const ManageCategories: FC = () => {
-  const { categoryList, loading, message } = useAppSelector(
-    (state) => state.category
-  );
+  const { categoryList, loading } = useAppSelector((state) => state.category);
 
   const [editCategoryId, setEditCategoryId] = useState('');
   const [editCategoryName, setEditCategoryName] = useState('');
   const [errors, setErrors] = useState<IError>(initialErrorState);
   const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   if (message && !show) dispatch(showSnackbar());
-  // }, [dispatch, message, show]);
-
   useEffect(() => {
-    if (!categoryList?.length) dispatch(fetchCategories());
-  }, [categoryList, dispatch]);
+    dispatch(fetchCategories());
+  }, [dispatch]);
 
   const handleEditCategory = (id: string): void => {
     setEditCategoryId(id);
@@ -70,6 +64,9 @@ const ManageCategories: FC = () => {
     setEditCategoryId('');
     setEditCategoryName('');
   };
+
+  if (!categoryList?.length)
+    return <h2 className={styles.emptyState}>Not found categories</h2>;
 
   return (
     <div className={styles.main_wrapper}>

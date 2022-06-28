@@ -60,6 +60,7 @@ const Scanner = ({ onDetected }) => {
     });
 
     Quagga.onDetected(detected);
+
     // eslint-disable-next-line
   }, []);
 

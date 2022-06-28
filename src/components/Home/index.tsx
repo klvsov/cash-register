@@ -60,6 +60,10 @@ const Home: FC = () => {
   };
 
   if (categoryLoading) return <Loader size="small" />;
+
+  if (!categoryList?.length)
+    return <h2 className={styles.emptyState}>Not found categories</h2>;
+
   return (
     <div className={styles.home_wrapper}>
       <div className={styles.categoryList_wrapper}>
