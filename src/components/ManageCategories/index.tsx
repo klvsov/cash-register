@@ -9,7 +9,6 @@ import {
   fetchCategories,
   editCategory,
   deleteCategory,
-  clearCategoryMessage,
 } from '../../store/categoriesSlice';
 import Loader from '../Loader';
 

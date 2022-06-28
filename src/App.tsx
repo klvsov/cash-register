@@ -27,6 +27,7 @@ const App: FC = () => {
     productMessage && setTextMessage(productMessage);
     categoryMessage && setTextMessage(categoryMessage);
     if (productMessage || categoryMessage) openSnackBar(textMessage);
+    // eslint-disable-next-line
   }, [productMessage, categoryMessage]);
 
   return (
